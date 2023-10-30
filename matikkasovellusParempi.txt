@@ -1,0 +1,69 @@
+const kysely = require('prompt-sync')();
+
+// Funktio joka laskee potenssin tuloksen
+function potenssi(pohja, eksponentti) {
+  let tulos = 1;
+  for (let i = 0; i < eksponentti; i++) {
+    tulos = tulos * pohja;
+  }
+  return tulos;
+}
+
+let vaihtoehdot = "";
+let luku1, luku2;
+
+// Ainakun vaihtoehdot ei ole "l" -> vaihtoehdot näkyviin
+while (vaihtoehdot !== "l") {
+  console.log("Valitse toiminto:");
+  console.log("y) yhteenlasku");
+  console.log("v) vähennyslasku");
+  console.log("k) kertolasku");
+  console.log("j) jakolasku");
+  console.log("p) potenssi");
+  console.log("yk) ympyrän kehä");
+  console.log("l) lopeta");
+
+  vaihtoehdot = kysely().toLowerCase();
+
+
+  // jos vaihtoehdot on "l" -> ohjelma lopetetaan
+    if (vaihtoehdot == "l"){
+        return false;
+    }
+
+
+    // if lauseet laskutoimituksille
+  if (vaihtoehdot !== "yk") {
+    luku1 = parseFloat(kysely("Anna luku 1:"));
+    luku2 = parseFloat(kysely("Anna luku 2:"));
+
+    if (isNaN(luku1) || isNaN(luku2)) {
+      console.log("Syötetyt arvot eivät ole kelvollisia.");
+      continue;
+    }
+
+    if (vaihtoehdot === "y") {
+      console.log(luku1 + luku2);
+    } else if (vaihtoehdot === "v") {
+      console.log(luku1 - luku2);
+    } else if (vaihtoehdot === "k") {
+      console.log(luku1 * luku2);
+    } else if (vaihtoehdot === "p") {
+      console.log(potenssi(luku1, luku2));
+    } else if (vaihtoehdot === "j") {
+      if (luku2 === 0) {
+        console.log("Ei voi jakaa nollalla.");
+      } else {
+        console.log(luku1 / luku2);
+      }
+    }
+    // tarkastetaan onko syotetty arvo kelvollinen
+  } else {
+    const sade = parseFloat(kysely("Anna ympyrän säde:"));
+    if (isNaN(sade)) {
+      console.log("Syötetty arvo ei ole kelvollinen.");
+      continue;
+    }
+    console.log(2 * Math.PI * sade);
+  }
+}
